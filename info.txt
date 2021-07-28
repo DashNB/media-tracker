@@ -8,3 +8,7 @@ images - https://developers.themoviedb.org/3/getting-started/images
 search - https://api.themoviedb.org/3/search/movie?api_key={api_key}&query=
 
 Example request = https://api.themoviedb.org/3/movie/550?api_key=127642b314a4bde8dab4fcc39af245ae
+
+
+
+https://create-react-app.dev/docs/adding-custom-environment-variables/

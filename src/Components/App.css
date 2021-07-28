@@ -1,0 +1,23 @@
+.movie-container{
+  display:flex;
+  flex-wrap: wrap;
+  /* align-items: center; */
+}
+
+
+header{
+  background-color: #4664a3;
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search{
+  font-family: inherit;
+  border: 2px solid #14213d;
+  background-color:transparent;
+  border-radius: 50px;
+  color:#14213d;
+  font-size:1.2rem;
+  padding:0.5rem 1.5rem;
+}
