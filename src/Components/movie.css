@@ -1,46 +1,76 @@
-.movie{
-    width: 325px;
-    background-color: #023047; 
-    color:white;
-    margin:1rem;
-    border-radius: 5px;
-    box-shadow: 3px,3px,5px,rgba(0,0,0,0.1);
-    overflow:hidden;
-    position:relative;
+.movie {
+  width: 325px;
+  background-color: #c84b31;
+  color: white;
+  margin: 1rem;
+  border-radius: 5px;
+  box-shadow: 3px, 3px, 5px, rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
 }
 
 .movie img {
-    
-    max-width:100%
+  object-fit: cover;
+  height: 500px;
+  width: 100%;
+}
+.icon-button{
+  position: absolute;
+  top:-510px;
+  right:-270px;
 }
 
-.movie-info{
-    display:flex
+.img-btn{
+  /* background-color:#c84b31; */
+
+  color:#c84b31;
 }
 
-.movie-info h3{
-    margin:0;
-    align-items:centers;
-    padding:1rem;
-    justify-content: space-between;
+
+.movie-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
 }
 
-.movie-overview{
-    position: absolute;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    box-shadow: 0,-3px,5px,rgba(0,0,0,0.1);
-    background-color: #a76060;
-    color:#59a1c5;
-    padding: 1rem;
-    max-height: 100%;
-    transform: translateY(102%);
-    transition:  transform 0.5s ease-in-out;
+.movie-info h3 {
+  margin: 0;
 }
 
-.movie:hover .movie-overview{
-    transform: translateY(0%)
+.movie-overview {
+  position: absolute;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0, -3px, 5px, rgba(0, 0, 0, 0.1);
+  background-color: #ecdbba;
+  color: #161616;
+  padding: 1rem;
+  max-height: 100%;
+  transform: translateY(102%);
+  transition: transform 0.5s ease-in-out;
+}
+
+.movie:hover .movie-overview {
+  transform: translateY(0%);
+}
+
+.tag {
+  background-color: #161616;
+  padding: 0.5rem;
+  /* font-weight: bold; */
+  border-radius: 5px;
+}
+
+.tag.green {
+  color: rgb(83, 165, 83);
+}
+.tag.orange {
+  color: orange;
+}
+.tag.red {
+  color: red;
 }
