@@ -7,9 +7,10 @@ import Movie from "./Movie";
 
 const popularMoviesAPI = process.env.REACT_APP_API_MOVIE_POPULAR;
 function App() {
+  // const [isIdFavorited, setIsFavorite] = useState(false);
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  // const [checkfavoriteID, setcheckfavoriteID] = useState([]);
   const [favoriteMovies, setFavoriteMovies] = useState([]);
 
   function getMovies(API) {
@@ -26,14 +27,24 @@ function App() {
     }
 
     // eslint-disable-next-line no-unused-vars
-    const userFavorite = { favorite: favoriteMovies };
+    const userFavorite = { favorite: favoriteMovies, action: "add" };
 
-    axios
-      .post("http://localhost:3001/userFavorite", favoriteMovies)
-      .then((res) => console.log(res.data))
+    await axios
+      .post("http://localhost:3001/userFavorite", userFavorite)
+      .then(()=>true)
       .catch((err) => console.log(err));
 
 
+  }
+
+  async function onRemove(movieID) {
+    const userFavorite = { favorite: movieID, action: "remove" };
+    await axios
+      .post("http://localhost:3001/userFavorite", userFavorite)
+      .then(()=>false)
+      .catch((err) => console.log(err));
+
+    return false;
   }
 
   useEffect(() => {
@@ -55,9 +66,6 @@ function App() {
   return (
     <>
       <header>
-        {/* <button className="btn-fav" type="submit">
-          Favorite
-        </button> */}
         <ul className="ul-header">
           <li className="li">Favorites</li>
           <li className="li">Popular</li>
@@ -74,7 +82,12 @@ function App() {
       </header>
       <div className="movie-container">
         {movies.map((movie) => (
-          <Movie id={movie.id} data={movie} addMovie={addMovie} />
+          <Movie
+            id={movie.id}
+            data={movie}
+            addMovie={addMovie}
+            onRemove={onRemove}
+          />
         ))}
       </div>
     </>
