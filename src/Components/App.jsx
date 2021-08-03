@@ -1,5 +1,6 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import useStateRef from 'react-usestateref'
+import React, { useEffect} from "react";
 // eslint-disable-next-line no-unused-vars
 import dotenv from "dotenv/config";
 import axios from "axios";
@@ -7,11 +8,13 @@ import Movie from "./Movie";
 
 const popularMoviesAPI = process.env.REACT_APP_API_MOVIE_POPULAR;
 function App() {
-  // const [isIdFavorited, setIsFavorite] = useState(false);
-  const [movies, setMovies] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  // const [checkfavoriteID, setcheckfavoriteID] = useState([]);
-  const [favoriteMovies, setFavoriteMovies] = useState([]);
+  const [movies, setMovies] = useStateRef([]);
+  const [searchTerm, setSearchTerm] = useStateRef("");
+  const [favoriteMovies, setFavoriteMovies,favoriteMoviesRef] = useStateRef([]);
+  // eslint-disable-next-line no-unused-vars
+  const [bool, setbool,boolref] = useStateRef(false);
+  // eslint-disable-next-line no-unused-vars
+  const [bool2, setbool2,boolref2] = useStateRef(false);
 
   function getMovies(API) {
     fetch(API)
@@ -25,26 +28,32 @@ function App() {
     if (!favoriteMovies.includes(movieID)) {
       setFavoriteMovies((prevMovies) => [...prevMovies, movieID]);
     }
-
-    // eslint-disable-next-line no-unused-vars
-    const userFavorite = { favorite: favoriteMovies, action: "add" };
-
+    const userFavorite = { favorite: favoriteMoviesRef.current, action: "add" };
+    // console.log(userFavorite)
     await axios
       .post("http://localhost:3001/userFavorite", userFavorite)
-      .then(()=>true)
+      .then(() => {
+        setbool(true);
+      })
       .catch((err) => console.log(err));
 
-
+      console.log(`App.jsx-addMovie -bool: ${boolref.current}`)
+    // return boolref.current;
   }
 
   async function onRemove(movieID) {
     const userFavorite = { favorite: movieID, action: "remove" };
+
     await axios
       .post("http://localhost:3001/userFavorite", userFavorite)
-      .then(()=>false)
+      .then(() => {
+        setbool(false);
+      })
       .catch((err) => console.log(err));
 
-    return false;
+    console.log(`App.jsx-onRemove -bool: ${boolref2.current}`)
+
+    // return boolref.current;
   }
 
   useEffect(() => {
@@ -87,6 +96,7 @@ function App() {
             data={movie}
             addMovie={addMovie}
             onRemove={onRemove}
+            bool={boolref.current}
           />
         ))}
       </div>

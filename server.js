@@ -33,23 +33,18 @@ const userFavoriteSchema = new mongoose.Schema({
 // eslint-disable-next-line new-cap
 const Favorite = new mongoose.model("Favorite", userFavoriteSchema);
 
-function addMovie(idArray) {
+function addMovie(idArray, req, res) {
   // eslint-disable-next-line array-callback-return
   idArray.map((id) => {
-    // console.log(`ID: ${id}`);
     Favorite.countDocuments({ favoriteID: id }, (err1, count) => {
-      // console.log(`count: ${count}`);
-      // console.log(`count === 0: ${count === 0}`);
       if (err1) {
         console.log(err1);
       } else if (count === 0) {
         const userFavoriteSchemaTest = new Favorite({ favoriteID: id });
-
         userFavoriteSchemaTest.save((err2, movieID) => {
           if (err2) {
             console.log(err2);
           }
-          // console.log(`${movieID} saved to Favorite collection.`);
         });
       }
     });
@@ -57,15 +52,18 @@ function addMovie(idArray) {
 }
 
 async function removeID(id, req, res) {
-  console.log(id)
-  const result = await Favorite.deleteOne({ favoriteID: id });
-  console.log(`ok? ${result.ok}. 1-no errors; 0 - no docs matched`);
+  const result = Favorite.deleteOne({ favoriteID: id }, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Successful Deletion!");
+    }
+  });
 }
 
-function idExists(id, req, res) {
+function checkIdExists(id, req, res) {
   Favorite.countDocuments({ favoriteID: id }, (err1, count) => {
-    // console.log(`count: ${count}`);
-    // console.log(`count === 0: ${count === 0}`);
+    console.log(`count document: ${count}`);
     if (err1) {
       console.log(err1);
     } else if (count === 0) {
@@ -86,7 +84,7 @@ app.post("/userFavorite", (req, res) => {
       removeID(favorite, req, res);
       break;
     case "check":
-      idExists(favorite, req, res);
+      checkIdExists(favorite, req, res);
       break;
     default:
       console.log("Switch Error!");
